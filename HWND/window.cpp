@@ -20,14 +20,15 @@ namespace functions {
     }
     void create_win::execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream) { 
         std::vector<void*> values;
-        filldefaultvalues(argumentspointer, &values);
+        filldefaultvalues(argumentspointer, values);
         *(void**)values[0] = new win::window(
             (HINSTANCE)values[1],
             *(std::wstring*)values[2],
             *(std::wstring*)values[3],
             (HICON)values[4],
             (HCURSOR)values[5],
-            *(win::window_xywh*)values[6]
+            *(win::window_xywh*)values[6],
+            *(std::vector<basicfunction*>*)values[7]
         );
         (*(win::window**)values[0])->setV((*(win::window**)values[0])->getV());
     }
@@ -59,10 +60,10 @@ namespace functions {
             return;		//avoid uncontrollable execution
         }
         std::vector<void*> values;
-        filldefaultvalues(argumentspointer, &values);
+        filldefaultvalues(argumentspointer, values);
         MSG msg = { 0 };
         while (WM_QUIT != msg.message) {
-            if (PeekMessage(&msg, *(HWND*)values[0], *(UINT*)values[1], *(UINT*)values[2], PM_REMOVE)) {
+            if (PeekMessage(&msg, *(HWND*)values[0], 0, 0 /* *(UINT*)values[1], *(UINT*)values[2] */, PM_REMOVE)) {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
@@ -97,7 +98,8 @@ namespace functions {
             std::wstring title, 
             HICON hicon, 
             HCURSOR hcursor, 
-            window_xywh rect
+            window_xywh rect,
+            std::vector<basicfunction*> winsubproc
         ) : condition(
             initwin(
                 hwnd, 
@@ -109,7 +111,7 @@ namespace functions {
                 rect
             )
         ), 
-        classname(classname), rect(rect) {}
+        classname(classname), rect(rect), winsubproc(winsubproc){}
         void window::destruct(void* pointer) {
             deletable_obj::destructor<basicfunction>(pointer);
         }
@@ -187,10 +189,15 @@ namespace functions {
         }
         LRESULT window::winproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
             LRESULT lr = DefWindowProc(hwnd, msg, wparam, lparam);
-            std::vector<LRESULT(*)(HWND, UINT, WPARAM, LPARAM)>* procs = (std::vector<LRESULT(*)(HWND, UINT, WPARAM, LPARAM)>*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+            std::vector<basicfunction*>* procs = (std::vector<basicfunction*>*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
             if (procs) {
-                for (LRESULT(*f)(HWND, UINT, WPARAM, LPARAM) : *procs) {
-                    lr |= f(hwnd, msg, wparam, lparam);
+                std::vector<void*> data{ &lr, &hwnd, &msg, &wparam, &lparam };
+                uint64_t errorcode = 0;
+                for (basicfunction* f : *procs) {
+                    f->execute(&data, &errorcode, false, nullptr);
+                    if (!errorcode) {
+                        break;
+                    }
                 }
             }
             return lr;

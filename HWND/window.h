@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "function/include/functionfactory.h"
 #include "function/include/defaultvalues.h"
-#include "token_name.h"
+#include "token_data.h"
 #include <string>
 #define DEFAULT_CURSOR LoadCursor(NULL, IDC_ARROW)
 #define DEFAULT_ICON LoadIcon(NULL, IDI_APPLICATION)
@@ -51,10 +51,6 @@ namespace functions {
 	};
 
 
-	struct create_win_subproc : basicfunction {
-		using basicfunction::basicfunction;
-		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
-	};
 	struct add_win_subproc : basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
@@ -79,7 +75,8 @@ namespace functions {
 					std::wstring title, 
 					HICON hicon, 
 					HCURSOR hcursor, 
-					window_xywh rect
+					window_xywh rect,
+					std::vector<basicfunction*> winsubproc
 				);
 				void setX(int xpos);
 				void setY(int ypos);
@@ -89,7 +86,7 @@ namespace functions {
 				void setshowmode(int mode);
 				window_xywh* get_xywh();
 				bool getV();
-				std::vector<LRESULT(*)(HWND, UINT, WPARAM, LPARAM)> winsubproc;
+				std::vector<basicfunction*> winsubproc;
 				HWND gethwnd();
 			protected:
 				virtual ~window() {}
@@ -101,7 +98,6 @@ namespace functions {
 				window_xywh rect;
 				HWND hwnd;
 				std::wstring classname;
-				//std::vector<LRESULT(*)(HWND, UINT, WPARAM, LPARAM)> winsubproc;
 				static LRESULT CALLBACK winproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 				HRESULT initwin(
 					HWND& hwnd, 
@@ -115,10 +111,10 @@ namespace functions {
 		};
 	}
 	static screen_size get_screen_size{
-		token_name::token_name_to_id(L"get_screen_size")	//name
+		token_data::token_name_to_id(L"get_screen_size")	//name
 	};
 	static create_win create_window{
-		token_name::token_name_to_id(L"create_window"),	//name
+		token_data::token_name_to_id(L"create_window"),	//name
 		{	//default values
 			nullptr,
 			nullptr,
@@ -126,32 +122,33 @@ namespace functions {
 			(void*)new std::wstring(L"NO_TITLE_WINDOW"),
 			(void*)DEFAULT_ICON,
 			(void*)DEFAULT_CURSOR,
-			(void*)&win::default_xywh
+			(void*)&win::default_xywh,
+			(void*)new std::vector<basicfunction*>()
 		}
 	};
 	static set_win_x set_window_x{
-		token_name::token_name_to_id(L"set_window_x")	//name
+		token_data::token_name_to_id(L"set_window_x")	//name
 	};
 	static set_win_y set_window_y{
-		token_name::token_name_to_id(L"set_window_y")	//name
+		token_data::token_name_to_id(L"set_window_y")	//name
 	};
 	static set_win_w set_window_w{
-		token_name::token_name_to_id(L"set_window_w")	//name
+		token_data::token_name_to_id(L"set_window_w")	//name
 	};
 	static set_win_h set_window_h{
-		token_name::token_name_to_id(L"set_window_h")	//name
+		token_data::token_name_to_id(L"set_window_h")	//name
 	};
 	static set_win_v set_window_v{
-		token_name::token_name_to_id(L"set_window_v")	//name
+		token_data::token_name_to_id(L"set_window_v")	//name
 	};
 	static set_win_sm set_window_sm{
-		token_name::token_name_to_id(L"set_window_sm")	//name
+		token_data::token_name_to_id(L"set_window_sm")	//name
 	};
 	static get_win_hwnd get_window_hwnd{
-		token_name::token_name_to_id(L"get_window_hwnd")	//name
+		token_data::token_name_to_id(L"get_window_hwnd")	//name
 	};
 	static create_msg_loop create_window_message_loop{
-		token_name::token_name_to_id(L"create_window_message_loop"),	//name
+		token_data::token_name_to_id(L"create_window_message_loop"),	//name
 		{	//default values
 			(void*)&defaultvalues::NULL_PTR,
 			(void*)&defaultvalues::UINT_ZERO,
