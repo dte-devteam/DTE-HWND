@@ -1,5 +1,6 @@
 #pragma once
 #include "window.h"
+#include "winproc.h"
 namespace functions {
 	namespace win {
 		inline std::vector<basicfunction*>* dllfunctions = new std::vector<basicfunction*>(

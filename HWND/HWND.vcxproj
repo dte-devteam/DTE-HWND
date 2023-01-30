@@ -155,6 +155,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="window.h" />
+    <ClInclude Include="winproc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -166,6 +167,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="window.cpp" />
+    <ClCompile Include="winproc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exporttable.def" />

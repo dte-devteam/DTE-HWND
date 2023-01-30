@@ -4,6 +4,7 @@
 #include "function/include/functionfactory.h"
 #include "function/include/defaultvalues.h"
 #include "token_data.h"
+#include "winproc.h"
 #include <string>
 #define DEFAULT_CURSOR LoadCursor(NULL, IDC_ARROW)
 #define DEFAULT_ICON LoadIcon(NULL, IDI_APPLICATION)
@@ -123,7 +124,7 @@ namespace functions {
 			(void*)DEFAULT_ICON,
 			(void*)DEFAULT_CURSOR,
 			(void*)&win::default_xywh,
-			(void*)new std::vector<basicfunction*>()
+			(void*)new std::vector<basicfunction*>({ &winproc::win_post_quit })
 		}
 	};
 	static set_win_x set_window_x{
