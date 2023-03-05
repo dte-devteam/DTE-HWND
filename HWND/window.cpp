@@ -6,17 +6,24 @@ LRESULT deletewindow(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 }
 namespace functions {
     void screen_size::execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream) {
-        RECT desktop;
-        const HWND hDesktop = GetDesktopWindow();
-        GetWindowRect(hDesktop, &desktop);
-        *(win::window_xywh**)(*argumentspointer)[0] = new win::window_xywh(
-            {
-                (int)desktop.left,
-                (int)desktop.top,
-                (int)(desktop.right - desktop.left),
-                (int)(desktop.bottom - desktop.top)
-            }
-        );
+        std::vector<void*> values;
+        filldefaultvalues(argumentspointer, values);
+        if (values[0]) {
+            RECT desktop;
+            const HWND hDesktop = GetDesktopWindow();
+            GetWindowRect(hDesktop, &desktop);
+            *(win::window_xywh*)values[0] = win::window_xywh(
+                {
+                    (int)desktop.left,
+                    (int)desktop.top,
+                    (int)(desktop.right - desktop.left),
+                    (int)(desktop.bottom - desktop.top)
+                }
+            );
+        }
+        else if (errorcodepointer) {
+            *errorcodepointer = errorvalues::NULLPTR;
+        }
     }
     void create_win::execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream) { 
         std::vector<void*> values;
