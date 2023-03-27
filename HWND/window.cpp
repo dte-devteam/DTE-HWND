@@ -28,7 +28,8 @@ namespace functions {
     void create_win::execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream) { 
         std::vector<void*> values;
         filldefaultvalues(argumentspointer, values);
-        *(void**)values[0] = new win::window(
+        std::cout << values[0] << std::endl;
+        *(win::window**)values[0] = new win::window(
             (HINSTANCE)values[1],
             *(std::wstring*)values[2],
             *(std::wstring*)values[3],

@@ -15,11 +15,11 @@ namespace functions {
 			void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 		};
 		//instances
-		static post_quit win_post_quit{
+		static post_quit* win_post_quit = new post_quit(
 			token_data::token_name_to_id(L"win_post_quit")	//name
-		};
-		static paint_handler win_paint_handler{
+		);
+		static paint_handler* win_paint_handler = new paint_handler(
 			token_data::token_name_to_id(L"win_paint_handler")	//name
-		};
+		);
 	}
 }
