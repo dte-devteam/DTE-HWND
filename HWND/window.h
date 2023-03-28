@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable:4275) //solve this later!
 #include "pch.h"
-#include "function/include/functionfactory.h"
+#include "function/include/basicfunction.h"
 #include "data/include/values.h"
 #include "data/include/errorvalues.h"
 #include "token_data.h"
@@ -9,7 +9,6 @@
 #include <string>
 #define DEFAULT_CURSOR LoadCursor(NULL, IDC_ARROW)
 #define DEFAULT_ICON LoadIcon(NULL, IDI_APPLICATION)
-using namespace functionfactory;
 namespace functions {
 	namespace win {
 		struct window_xywh {
@@ -32,7 +31,7 @@ namespace functions {
 				HICON hicon,
 				HCURSOR hcursor,
 				window_xywh rect,
-				std::vector<basicfunction*> winsubproc
+				std::vector<function::basicfunction*> winsubproc
 			);
 			void setX(int xpos);
 			void setY(int ypos);
@@ -42,7 +41,7 @@ namespace functions {
 			void setshowmode(int mode);
 			window_xywh* get_xywh();
 			bool getV();
-			std::vector<basicfunction*> winsubproc;
+			std::vector<function::basicfunction*> winsubproc;
 			HWND gethwnd();
 		protected:
 			virtual ~window() {}
@@ -67,49 +66,49 @@ namespace functions {
 		};
 	}
 	//constructors
-	struct screen_size : basicfunction {
+	struct screen_size : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct create_win : basicfunction {
+	struct create_win : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_x : basicfunction {
+	struct set_win_x : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_y : basicfunction {
+	struct set_win_y : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_w : basicfunction {
+	struct set_win_w : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_h : basicfunction {
+	struct set_win_h : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_v : basicfunction {
+	struct set_win_v : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct set_win_sm : basicfunction {
+	struct set_win_sm : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct get_win_hwnd : basicfunction {
+	struct get_win_hwnd : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
-	struct create_msg_loop : basicfunction {
+	struct create_msg_loop : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
 
 
-	struct add_win_subproc : basicfunction {
+	struct add_win_subproc : function::basicfunction {
 		using basicfunction::basicfunction;
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
@@ -130,7 +129,7 @@ namespace functions {
 			(void*)DEFAULT_ICON,												//HICON (has same sise as ponter)									
 			(void*)DEFAULT_CURSOR,												//HCURSOR (has same sise as ponter)
 			(void*)&win::default_xywh,											//pointer to set window position and size
-			(void*)new std::vector<basicfunction*>({ winproc::win_post_quit })	//pointer to set window window processes
+			(void*)new std::vector<function::basicfunction*>({ winproc::win_post_quit })	//pointer to set window window processes
 		}
 	);
 	inline set_win_x* set_window_x = new set_win_x(

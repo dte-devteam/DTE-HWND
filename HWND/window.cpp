@@ -22,7 +22,7 @@ namespace functions {
             );
         }
         else if (errorcodepointer) {
-            *errorcodepointer = errorvalues::NULLPTR;
+            *errorcodepointer = data::errorvalues::NULLPTR;
         }
     }
     void create_win::execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream) { 
@@ -107,7 +107,7 @@ namespace functions {
             HICON hicon, 
             HCURSOR hcursor, 
             window_xywh rect,
-            std::vector<basicfunction*> winsubproc
+            std::vector<function::basicfunction*> winsubproc
         ) : condition(
             initwin(
                 hwnd, 
@@ -121,7 +121,7 @@ namespace functions {
         ), 
         classname(classname), rect(rect), winsubproc(winsubproc){}
         void window::destruct(void* pointer) {
-            deletable_obj::destructor<basicfunction>(pointer);
+            deletable_obj::destructor<function::basicfunction>(pointer);
         }
         void window::setX(int xpos) {
             rect.x = xpos;
@@ -197,11 +197,11 @@ namespace functions {
         }
         LRESULT window::winproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
             LRESULT lr = DefWindowProc(hwnd, msg, wparam, lparam);
-            std::vector<basicfunction*>* procs = (std::vector<basicfunction*>*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+            std::vector<function::basicfunction*>* procs = (std::vector<function::basicfunction*>*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
             if (procs) {
                 std::vector<void*> data{ &lr, &hwnd, &msg, &wparam, &lparam };
                 uint64_t errorcode = 0;
-                for (basicfunction* f : *procs) {
+                for (function::basicfunction* f : *procs) {
                     f->execute(&data, &errorcode, false, nullptr);
                     if (!errorcode) {
                         break;

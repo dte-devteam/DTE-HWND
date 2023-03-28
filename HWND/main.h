@@ -1,12 +1,11 @@
 #pragma once
 #include "window.h"
 #include "winproc.h"
-#include "module/include/dependency_desc.h"
-using namespace dependency_desc;
+#include "module/include/function_data.h"
 namespace functions {
 	namespace win {
 		//module functions
-		static std::vector<basicfunction*>* dllfunctions = new std::vector<basicfunction*>{
+		static std::vector<function::basicfunction*>* dllfunctions = new std::vector<function::basicfunction*>{
 			get_screen_size,
 			create_window,
 			set_window_x,
@@ -23,7 +22,7 @@ namespace functions {
 		};
 		//*****************new function export*******************
 		//module has no dependencies, so function has empty reqirements ({ basicfunction* })
-		static std::vector<function_data>* ndllfunctions = new std::vector<function_data>({
+		static std::vector<module::function_data>* ndllfunctions = new std::vector<module::function_data>({
 			{ get_screen_size,				},
 			{ create_window,				},
 			{ set_window_x,					},
@@ -38,10 +37,10 @@ namespace functions {
 			{ winproc::win_paint_handler,	}
 		});
 		//export functions
-		std::vector<basicfunction*>* getfunctions() {
+		std::vector<function::basicfunction*>* getfunctions() {
 			return dllfunctions;
 		}
-		std::vector<function_data>* getnfunctions() {
+		std::vector<module::function_data>* getnfunctions() {
 			return ndllfunctions;
 		}
 	}

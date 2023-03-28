@@ -1,16 +1,15 @@
 #pragma once
-#include "function/include/functionfactory.h"
+#include "function/include/basicfunction.h"
 #include "data/include/values.h"
 #include "token_data.h"
-using namespace functionfactory;
 namespace functions {
 	namespace winproc {
 		//constructors
-		struct post_quit : basicfunction {
+		struct post_quit : function::basicfunction {
 			using basicfunction::basicfunction;
 			void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 		};
-		struct paint_handler : basicfunction {
+		struct paint_handler : function::basicfunction {
 			using basicfunction::basicfunction;
 			void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 		};
