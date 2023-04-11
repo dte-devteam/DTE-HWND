@@ -113,13 +113,13 @@ namespace functions {
 		void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
 	};
 	//instances
-	inline screen_size* get_screen_size = new screen_size(
+	inline screen_size get_screen_size{
 		token_data::token_name_to_id(L"get_screen_size"),	//function name
 		{	//default values
 			nullptr		//pointer where save win::window_xywh
 		}
-	);
-	inline create_win* create_window = new create_win(
+	};
+	inline create_win create_window{
 		token_data::token_name_to_id(L"create_window"),	//function name
 		{	//default values
 			nullptr,															//pointer where save win::window
@@ -129,35 +129,35 @@ namespace functions {
 			(void*)DEFAULT_ICON,												//HICON (has same sise as ponter)									
 			(void*)DEFAULT_CURSOR,												//HCURSOR (has same sise as ponter)
 			(void*)&win::default_xywh,											//pointer to set window position and size
-			(void*)new std::vector<function::basicfunction*>({ winproc::win_post_quit })	//pointer to set window window processes
+			(void*)new std::vector<function::basicfunction*>({ &winproc::win_post_quit })	//pointer to set window window processes
 		}
-	);
-	inline set_win_x* set_window_x = new set_win_x(
+	};
+	inline set_win_x set_window_x{
 		token_data::token_name_to_id(L"set_window_x")	//function name
-	);
-	inline set_win_y* set_window_y = new set_win_y(
+	};
+	inline set_win_y set_window_y{
 		token_data::token_name_to_id(L"set_window_y")	//function name
-	);
-	inline set_win_w* set_window_w = new set_win_w(
+	};
+	inline set_win_w set_window_w{
 		token_data::token_name_to_id(L"set_window_w")	//function name
-	);
-	inline set_win_h* set_window_h = new set_win_h(
+	};
+	inline set_win_h set_window_h{
 		token_data::token_name_to_id(L"set_window_h")	//function name
-	);
-	inline set_win_v* set_window_v = new set_win_v(
+	};
+	inline set_win_v set_window_v{
 		token_data::token_name_to_id(L"set_window_v")	//function name
-	);
-	inline set_win_sm* set_window_sm = new set_win_sm(
+	};
+	inline set_win_sm set_window_sm{
 		token_data::token_name_to_id(L"set_window_sm")	//function name
-	);
-	inline get_win_hwnd* get_window_hwnd = new get_win_hwnd(
+	};
+	inline get_win_hwnd get_window_hwnd{
 		token_data::token_name_to_id(L"get_window_hwnd"),	//function name
 		{	//default values
 			nullptr,	//pointer of win::window
 			nullptr		//pointer where save HWND
 		}
-	);
-	inline create_msg_loop* create_window_message_loop = new create_msg_loop(
+	};
+	inline create_msg_loop create_window_message_loop{
 		token_data::token_name_to_id(L"create_window_message_loop"),	//function name
 		{	//default values
 			(void*)&data::NULL_PTR,
@@ -165,5 +165,5 @@ namespace functions {
 			(void*)&data::UINT_ZERO,
 			nullptr
 		}
-	);
+	};
 }

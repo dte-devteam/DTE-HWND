@@ -123,7 +123,8 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>D:\DTE\DynamicTokenEngine\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenOperator.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>exporttable.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +148,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <ModuleDefinitionFile>exporttable.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
       <AdditionalDependencies>TokenOperator.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\DTE\DynamicTokenEngine\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -170,9 +172,6 @@
     </ClCompile>
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winproc.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exporttable.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

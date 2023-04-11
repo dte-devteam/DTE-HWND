@@ -1,5 +1,0 @@
-LIBRARY "DTE HWND v0"
-DESCRIPTION "DTE HWND module provides window on Windows OS"
-EXPORTS
-	getfunctions	@1
-	getnfunctions	@2
