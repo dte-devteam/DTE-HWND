@@ -1,24 +1,16 @@
 #pragma once
-#include "function/include/basicfunction.h"
-#include "data/include/values.h"
-#include "token_data.h"
+#include "token/stream/include/basic_stream.h"
+#include "token/function/error_codes.h"
+#include "token/data/include/value.h"
 namespace functions {
 	namespace winproc {
-		//constructors
-		struct post_quit : function::basicfunction {
-			using basicfunction::basicfunction;
-			void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
+		struct post_quit : tokenoperator::dte_token::function::basic_function {
+			using tokenoperator::dte_token::function::basic_function::basic_function;
+			void execute(tokenoperator::dte_token::stream::basic_stream& caller, tokenoperator::dte_token::function::bf_args& args, bool forced = false);
 		};
-		struct paint_handler : function::basicfunction {
-			using basicfunction::basicfunction;
-			void execute(std::vector<void*>* argumentspointer, uint64_t* errorcodepointer, bool forced, void* stream);
-		};
-		//instances
-		inline post_quit win_post_quit{
-			token_data::token_name_to_id(L"win_post_quit")	//name
-		};
-		inline paint_handler win_paint_handler{
-			token_data::token_name_to_id(L"win_paint_handler")	//name
+		struct paint_handler : tokenoperator::dte_token::function::basic_function {
+			using tokenoperator::dte_token::function::basic_function::basic_function;
+			void execute(tokenoperator::dte_token::stream::basic_stream& caller, tokenoperator::dte_token::function::bf_args& args, bool forced = false);
 		};
 	}
 }
